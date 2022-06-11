@@ -2,8 +2,14 @@
   <div id="app">
     <nav>
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <router-link to="/post-comment">PostComment</router-link> |
     </nav>
+      <button @click="$router.push({name:'post-comment'})">コメント投稿</button>
+      <button @click="login" v-if="!$store.state.loginUser">ログイン</button>
+      <button @click="logout" v-else>ログアウト</button>
+      <p v-if="$store.state.loginUser">こんにちは{{userName}}さん</p>
+    <p v-else>こんにちはゲストユーザーさん</p>
     <router-view/>
   </div>
 </template>
@@ -30,3 +36,16 @@ nav {
   }
 }
 </style>
+
+<script>
+import { mapActions , mapGetters } from 'vuex'
+export default {
+  methods: {
+
+    ...mapActions(['login','logout'])
+  },
+  computed: {
+    ...mapGetters(['userName', 'photoURL'])
+  }
+}
+</script>
